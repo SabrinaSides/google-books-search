@@ -1,0 +1,13 @@
+.filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgray;
+  font-size: 22px;
+}
+
+.searchInput {
+  margin: 5px;
+  padding: 2px;
+}
