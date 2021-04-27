@@ -6,7 +6,7 @@ class BookList extends React.Component {
     const bookItem = this.props.bookResults.map((book, i) =>
       <Book
       title={book.volumeInfo.title}
-      author={book.volumeInfo.authors[0]}
+      //author={book.volumeInfo.authors[0]}
       description={book.volumeInfo.description}
       //image={book.volumeInfo.imageLinks.thumbnail}
       link={book.volumeInfo.infoLink}

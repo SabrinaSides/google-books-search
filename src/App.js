@@ -4,18 +4,19 @@ import SearchForm from './SearchForm/SearchForm';
 import BookList from './BookList/BookList';
 
 function formatQueryParams(params){
-  const queryItems = Object.keys(params).map(key => `${encodeURI(key)}=${encodeURIComponent(params[key])}`)
+  const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
   const queryJoined = queryItems.join('&');
   return queryJoined;
 }
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       bookResults: [],
       searchTerm: '',
-      printType: 'all',
-      bookType:'partial'
+      printType: '',
+      bookType:''
     };
   }
 
@@ -26,37 +27,41 @@ class App extends React.Component {
   };
 
   setPrintType = (selection) => {
-    console.log('printype ran');
     this.setState({
-      printType: selection
-    });
+      printType: selection,
+    })
+    this.handleDataFetch();
   }
 
   setBookType = (selection) => {
     this.setState({
       bookType: selection
     })
+    this.handleDataFetch();
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const searchTerm = this.state.searchTerm;
+    this.handleDataFetch();
+  };
+
+  handleDataFetch = () => {
+    const { searchTerm, printType, bookType } = this.state;
     const APIkey = 'AIzaSyC9prUiAf010wAgNktLeiG8dhmD1m2K-cQ';
-    const printType = this.state.printType;
-    const bookType = this.state.bookType;
+    console.log('this is the url for booktype' + bookType);
     const baseUrl =
-      'https://www.googleapis.com/books/v1/volumes?';
+      `https://www.googleapis.com/books/v1/volumes/?apiKey=${APIkey}&q=${searchTerm}&printType=${printType === '' ? 'all' : printType}&filter=${bookType === '' ? 'partial' : bookType}`;
     const params = {
       apikey: APIkey,
       q: searchTerm,
-      printType: printType,
-      filter: bookType
+      //printType: printType,
+      //filter: bookType
     };
-    const queryString = formatQueryParams(params);
-    const url = baseUrl + queryString;
+    //const queryString = formatQueryParams(params);
+    //const url = baseUrl + queryString;
 
 
-    fetch(url)
+    fetch(baseUrl)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Something went wrong, please try again.');
@@ -68,15 +73,14 @@ class App extends React.Component {
         this.setState({
           bookResults: responseJson.items,
           error: null,
-        });
+        }, console.log(responseJson));
       })
       .catch((err) => {
         this.setState({
           error: err.message,
         });
       });
-  };
-
+  }
 
   render() {
     return (
@@ -97,6 +101,13 @@ class App extends React.Component {
       </main>
     );
   }
+    static defaultProps = {
+      bookResults: [],
+      searchTerm: '',
+      printType: 'all',
+      bookType:'partial'
+  }
 }
+
 
 export default App;

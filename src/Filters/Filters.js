@@ -13,7 +13,7 @@ class Filters extends React.Component {
         </select>
 
         <label htmlFor="bookType">Book Type:</label>
-        <select id="bookType" className="dropdown" value={this.props.bookType} onChange={e => this.props.updateBookType(e.target.value)}>
+        <select id="bookType" className="dropdown" /*value={this.props.bookType}*/ onChange={e => this.props.updateBookType(e.target.value)}>
           <option value="">No Filter</option>
           <option value="ebooks">eBooks (Paid and Free)</option>
           <option value="free-ebooks">Free eBooks</option>
