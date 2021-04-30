@@ -2,24 +2,23 @@ import React from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import Filters from '../Filters/Filters';
 
-class SearchForm extends React.Component {
-  render() {
+function SearchForm(props){
     return (
       <div>
         <SearchBar
-          searchTerm={this.props.SearchTerm}
-          updateSearchTerm={this.props.updateSearchTerm}
-          onSubmit={this.props.onSubmit}
+          searchTerm={props.SearchTerm}
+          updateSearchTerm={props.updateSearchTerm}
+          onSubmit={props.onSubmit}
         />
         <Filters
-          printType={this.props.printType}
-          bookType={this.props.bookType}
-          updatePrintType={this.props.updatePrintType}
-          updateBookType={this.props.updateBookType}
+          printType={props.printType}
+          bookType={props.bookType}
+          updatePrintType={props.updatePrintType}
+          updateBookType={props.updateBookType}
+          onSubmit={props.onSubmit}
         />
       </div>
     );
   }
-}
 
 export default SearchForm;
